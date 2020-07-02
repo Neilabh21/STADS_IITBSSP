@@ -1,43 +1,66 @@
-load('.\Star_Matching\4_Star_Matching\MILS\Output\st_DELTA_summary.mat');
-%load('.\Star_Matching\4_Star_Matching\MILS\Output\st_DELTA_summary_2.mat');
+clc
+clear
+set(0,'defaultTextInterpreter','latex');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plots the summary result of st_MILS.m
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+file_base_ip = '.\Star_Matching\4_Star_Matching\MILS\Output\Star_Matching_Output\';
+file_base_op = '.\Star_Matching\4_Star_Matching\MILS\Output\Plots\';
+%% Input
 
-%%
-fact = 100/15;
-mark = 0;
+file_loc_ip = strcat(file_base_ip , 'st_summary_ST.mat');
+load(file_loc_ip);
 
-x = linspace(1e-5, 1e-2, 300);
-%x = DELTA_arr;
-y1 = c_TrackingMode * fact;
-y2 = c_GreaterThanDelta * fact;
-
-i = 13;
-params = 'Center';
-c_TM = movavgFilt(y1', i, params);
-c_GD = movavgFilt(y2', i, params);
-
-%%
+%% Figure Name
+% Enter Threshold value
+T = num2str(T_HOLD);
+%% Plot
+X = 1: height(data_table);
 figure();
-hold on 
-plot(x, y1, '-go', 'MarkerFaceColor',[.49 1 .63]);
-plot(x, c_TM, 'r', 'LineWidth', 1.7);
-%plot(x, ones(length(x))*mark, 'k', 'LineWidth', 1.4);
+N_True = data_table.st_N_True;
+N_False = data_table.st_N_False;
+N_Miss = data_table.st_N_Miss;
+N_str = data_table.fe_n_str;
+
+hold on
+plot(X, N_True, '-sg', 'LineWidth', 1.5);
+plot(X, N_False, '-sr', 'LineWidth', 1.5);
+plot(X, N_Miss, '-sb', 'LineWidth', 1.5);
+plot(X, N_str, '-sk', 'LineWidth', 1.5);
+yline(6, '--k');
 hold off
-leg1 = legend('$\ge 4$',strcat('Moving avg: ',num2str(i)), 'Location', 'northwest');
-set(leg1,'Interpreter','latex');
-title('$\delta$ vs Occurance Rate','Interpreter','latex')
-ylabel('Occurance rate (%) \rightarrow');
-xlabel('\delta \rightarrow');
-xlim([x(1), x(end)]);
+xlim([X(1) X(end)])
+legend('True', 'False', 'Miss', 'Image', 'N_{TH}:6', 'Location', 'north');
+xlabel('Image Number');
+xticks(X);
+ylabel('Number of such instances $\rightarrow$');
+title(strcat('ST - Summary | Threshold value: ', T));
+
+print(strcat(file_base_op, 'threshold_', T), '-dpng', '-r500'); 
+
+%% Without Verification step
+% Enter Threshold value
+T = num2str(T_HOLD);
+% Plot
+X = 1: height(data_table);
+
+N_True = data_table.st_N_True + data_table.st_N_Miss;
+N_False = data_table.st_N_Match-N_True;
+N_str = data_table.fe_n_str;
 
 figure();
 hold on
-plot(x, y2, '-go', 'MarkerFaceColor',[.49 1 .63]);
-plot(x, c_GD, 'r', 'LineWidth', 1.7);
-%plot(x, ones(length(x))*mark, 'k', 'LineWidth', 1.4);
+plot(X, N_True, '-sg', 'LineWidth', 1.5);
+plot(X, N_False, '-sr', 'LineWidth', 1.5);
+plot(X, N_str, '-sk', 'LineWidth', 1.5);
+yline(6, '--k');
 hold off
-leg1 = legend('$\ge \delta_{TM}$',strcat('Moving avg: ',num2str(i)), 'Location', 'northwest');
-set(leg1,'Interpreter','latex');
-title('$\delta$ vs Occurance Rate','Interpreter','latex')
-ylabel('Occurance rate (%) \rightarrow');
-xlabel('\delta \rightarrow');
-xlim([x(1), x(end)]);
+xlim([X(1) X(end)])
+legend('True', 'False', 'Image', 'N_{TH}:6', 'Location', 'north');
+xlabel('Image Number');
+xticks(X);
+ylabel('Number of such instances $\rightarrow$');
+title(strcat('ST - Summary | No Verifiaction | Threshold value: ', T));
+
+print(strcat(file_base_op, 'no_ver_threshold_', T), '-dpng', '-r500'); 
+disp('Image Generation: Done');
