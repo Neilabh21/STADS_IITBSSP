@@ -17,7 +17,6 @@ function [se_Image_Mat, se_T] = se_PR_Main(se_T, se_bo, se_op, se_ig, se_er, se_
     % se_bo: (Table (1, m_2))
     %   Boresight Inputs. 
     %   Comments: 
-    %   - m_1 - # fields
     %   - Only 1 boresight input should be passed. 
     %   - Variable Names -  RA, Dec, Roll, se_r0 {(X, Y, Z)}
     %

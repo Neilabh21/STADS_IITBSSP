@@ -1,7 +1,7 @@
 function se_T = se_PR_4_Trim2Sensor(se_T, se_op, se_in)
-    % Transforms the Star Coordinates from Lens Frame to Sensor Frame
-    %   This script transforms all star coordinates from the Lens Frame
-    %   (3D) to the Sensor Frame (2D)
+    % Trims the Star Coordinates to within the Sensor Frame
+    %   This script trims the table of star coordinates to stars that lie
+    %   within the Sensor Frame
     %
     % -----------
     % Parameters:
@@ -34,7 +34,7 @@ function se_T = se_PR_4_Trim2Sensor(se_T, se_op, se_in)
     % Returns:
     % --------
     %
-    % se_T : (Table (n, m_1 + 2))
+    % se_T : (Table (n, m_1))
     %   The Updated Table with only the stars within the Sensor Dimensions
     
     % =====

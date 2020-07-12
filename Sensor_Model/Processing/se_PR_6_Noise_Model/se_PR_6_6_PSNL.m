@@ -1,4 +1,4 @@
-function se_Image_Mat = se_PR_6_6_PSNL(se_Image_Mat, se_er, se_ig, se_op)
+function se_Image_Mat = se_PR_6_7_PSNL(se_Image_Mat, se_er, se_ig, se_op)
     % Pixel Storage Node Leakage for the Sensor Model
     %   This function adds the Pixel Storage Node Leakage into the Image Matrix
     %
@@ -21,7 +21,7 @@ function se_Image_Mat = se_PR_6_6_PSNL(se_Image_Mat, se_er, se_ig, se_op)
     % -----------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Image Matrix without Photon Shot Noise
+    %   Image Matrix without PSNL
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     % se_op: (Structure)

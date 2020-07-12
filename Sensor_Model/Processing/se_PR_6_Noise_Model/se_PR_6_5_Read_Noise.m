@@ -1,6 +1,6 @@
-function se_Image_Mat = se_PR_6_5_Read_Noise(se_Image_Mat, se_er, se_ig)
-% Photo Response Non-Uniformity for the Sensor Model
-    %   This function adds the Photo Response Non-Uniformity into the Image Matrix
+function se_Image_Mat = se_PR_6_9_Read_Noise(se_Image_Mat, se_er, se_ig)
+    % Read Noise for the Sensor Model
+    %   This function adds the Read Noise into the Image Matrix
     %
     % -----------
     % References:
@@ -21,7 +21,7 @@ function se_Image_Mat = se_PR_6_5_Read_Noise(se_Image_Mat, se_er, se_ig)
     % -----------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Image Matrix without Photon Shot Noise
+    %   Image Matrix without Read Noise
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     %
@@ -40,7 +40,7 @@ function se_Image_Mat = se_PR_6_5_Read_Noise(se_Image_Mat, se_er, se_ig)
     % --------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Updated Image Matrix containing PRNU
+    %   Updated Image Matrix containing Read Noise
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     

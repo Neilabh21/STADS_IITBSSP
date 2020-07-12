@@ -1,7 +1,7 @@
-function se_Image_Mat = se_PR_0_PLS(se_Image_Mat, se_er, se_ig)
+function se_Image_Mat = se_PR_6_6_PLS(se_Image_Mat, se_er, se_ig)
     % Add Noise due to electrons when Shutter is closed
     %   This function adds the noise due to electrons when the shutter is
-    %   closed
+    %   closed. (Parasitic Light Sensitivity)
     %
     % -----------
     % References:
@@ -22,7 +22,7 @@ function se_Image_Mat = se_PR_0_PLS(se_Image_Mat, se_er, se_ig)
     % -----------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Image Matrix without Photon Shot Noise
+    %   Image Matrix without PLS
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     %
@@ -31,7 +31,7 @@ function se_Image_Mat = se_PR_0_PLS(se_Image_Mat, se_er, se_ig)
     % --------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Updated Image Matrix containing Photon Shot Noise
+    %   Updated Image Matrix containing PLS
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     
@@ -39,7 +39,13 @@ function se_Image_Mat = se_PR_0_PLS(se_Image_Mat, se_er, se_ig)
     % Code:
     % =====
     
+    % Calculate the PSNL Noise at each pixel
+    row     = repmat(1:se_op.CMOS.Length_Pix, [se_op.CMOS.Width_Pix, 1]);
+    column  = repmat((1:se_op.CMOS.Width_Pix)', [1, se_op.CMOS.Length_Pix]);
+    PLS_Noise_Time = (row + (se_op.CMOS.Width_Pix - column) * se_op.CMOS.Length_Pix) / se_er.Read_Rate;
+    % Notice the rounding - as number of electrons can't be fractional
+    
     % Add the PLS related noise
-    se_Image_Mat = se_Image_Mat + se_ig.Gain * se_er.PLS * (1 / se_ig.Capture_Rate);
+    se_Image_Mat = se_Image_Mat + (1 / se_er.PLS) * se_Image_Mat .* PSL_Noise_Time * se_ig.Capture_Rate;
 end
 

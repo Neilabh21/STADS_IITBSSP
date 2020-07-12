@@ -150,8 +150,8 @@ if (se_in.Debug_Run == 1); disp('Preprocessing: Image Generation Inputs Read'); 
 % 'se_bo'
 
 se_boresight_inputs_mat = readmatrix('se_boresight_inputs.xlsx','Range', strcat('B2:D', num2str(se_in.No_Boresight_Inputs + 1)));
-se_bo = array2table(se_boresight_inputs_mat, "VariableNames", ["RA", "Dec", "Roll"]);
-se_bo.se_r0 = [cosd(se_bo.Dec) .* cosd(se_bo.RA), cosd(se_bo.Dec) .* sind(se_bo.RA), sind(se_bo.Dec)];
+se_bo_arr = array2table(se_boresight_inputs_mat, "VariableNames", ["RA", "Dec", "Roll"]);
+se_bo_arr.se_r0 = [cosd(se_bo_arr.Dec) .* cosd(se_bo_arr.RA), cosd(se_bo_arr.Dec) .* sind(se_bo_arr.RA), sind(se_bo_arr.Dec)];
 if (se_in.Debug_Run == 1); disp('Preprocessing: Boresight Inputs Read'); end
 
 % ----------------------------------
@@ -186,7 +186,7 @@ if (se_in.Debug_Run == 1); disp('Preprocessing: Error Inputs Read'); end
 % Save the Inputs to a mat file
 % This section saves all the concerned structures to Sensor_Modelling/Inputs/se_Inputs.mat
 
-save('./Sensor_Model/Inputs/se_inputs.mat', "se_in", "se_op", "se_ig", "se_bo", "se_er");
+save('./Sensor_Model/Inputs/se_inputs.mat', "se_in", "se_op", "se_ig", "se_bo_arr", "se_er");
 clearvars("se_boresight_inputs_mat","se_ig_inputs_mat", "se_inputs_mat", "se_op_inputs_mat", "se_er_inputs_mat");
 if (se_in.Debug_Run == 1); disp('Preprocessing: Inputs Saved'); end
 fprintf('\n');

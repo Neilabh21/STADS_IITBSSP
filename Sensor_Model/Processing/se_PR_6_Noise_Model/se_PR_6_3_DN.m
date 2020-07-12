@@ -1,4 +1,4 @@
-function se_Image_Mat = se_PR_6_3_Dark_Noise(se_Image_Mat, se_ig, se_er)
+function se_Image_Mat = se_PR_6_5_DN(se_Image_Mat, se_ig, se_er)
     % Dark Noise for the Sensor Model
     %   This function adds the Dark  Noise into the Image Matrix
     %
@@ -21,7 +21,7 @@ function se_Image_Mat = se_PR_6_3_Dark_Noise(se_Image_Mat, se_ig, se_er)
     % -----------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Image Matrix without Photon Shot Noise
+    %   Image Matrix without Dark Noise
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     %
@@ -40,7 +40,7 @@ function se_Image_Mat = se_PR_6_3_Dark_Noise(se_Image_Mat, se_ig, se_er)
     % --------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Updated Image Matrix containing Photon Shot Noise
+    %   Updated Image Matrix containing Dark Noise
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     
@@ -49,7 +49,7 @@ function se_Image_Mat = se_PR_6_3_Dark_Noise(se_Image_Mat, se_ig, se_er)
     % =====
     
     % Add Dark Noise to the image
-    se_Image_Mat = se_Image_Mat + se_ig.Gain * round((se_er.DTN * ones(size(se_Image_Mat)) + (se_er.DS * se_ig.Exposure_Time) * randn(size(se_Image_Mat))));
+    se_Image_Mat = se_Image_Mat + se_ig.Gain * round((se_er.DTN + se_er.DS * se_ig.Exposure_Time) * ones(size(se_Image_Mat)) + sqrt(se_er.DS * se_ig.Exposure_Time) * randn(size(se_Image_Mat)));
     % Notice the rounding - as # Electrons can't be fractional
 end
 

@@ -8,7 +8,7 @@ function se_Image_Mat = se_PR_6_Noise_Model(se_Image_Mat, se_er, se_op, se_ig, s
     % -----------
     %
     % se_Image_Mat: (Array (1024, 1280))
-    %   Input no-noie Image Matrix
+    %   Input no-noise Image Matrix
     %   Comments:
     %   - Each pixel value is 10 Bits, i.e. 0 to 1023
     %
@@ -38,7 +38,7 @@ function se_Image_Mat = se_PR_6_Noise_Model(se_Image_Mat, se_er, se_op, se_ig, s
     %   - se_er.DTN     (Double)
     %       Dark Temporal Noise
     %   - se_er.FPN     (Double)
-    %       Fixed PAttern Noise
+    %       Fixed Pattern Noise
     %   - se_er.PLS     (Double)
     %       Parasitic Light Sensitivity
     %   - se_er.PRNU    (Double)

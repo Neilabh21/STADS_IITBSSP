@@ -20,7 +20,6 @@ function se_T = se_PR_1_Trim2FOV(se_T, se_bo, se_op, se_in)
     % se_bo: (Table (1, m_2))
     %   Boresight Inputs. 
     %   Comments: 
-    %   - m_1 - # fields
     %   - Only 1 boresight input should be passed. 
     %   - Variable Name -  "se_r0".
     %   - Format - (X, Y, Z)

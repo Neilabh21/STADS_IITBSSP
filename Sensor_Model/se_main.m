@@ -7,6 +7,7 @@
 % -----------------------
 
 se_pp = true;
+% se_pp = false;
 if (se_pp == true)
     se_PP_1_Load_Constants; 
     se_PP_2_Catalogue; 
@@ -21,18 +22,20 @@ load('./Sensor_Model/Inputs/Sim_No.mat');
 
 for i = 1:se_in.No_Boresight_Inputs
     % Calling the se_image function which generates the image.
-    [se_Image_Mat, se_T_Final] = se_PR_Main(se_T, se_bo(i, :), se_op, se_ig, se_er, se_in);
+    [se_Image_Mat, se_T_Final] = se_PR_Main(se_T, se_bo_arr(i, :), se_op, se_ig, se_er, se_in);
     
     % Constructing the Verification Table with SSP IDs, x and y coordinates
     se_T_Verification = array2table([se_T_Final.SSP_ID, se_T_Final.Sensor_y_Pixels, se_T_Final.Sensor_z_Pixels], 'VariableNames', {'SSP_ID', 'Sensor_X', 'Sensor_Y'});
     
     % Save all the files in
-    % Outputs/Simulation_{Simulation_Number}/File_{i'th star}
+    % Outputs/Simulation_{Simulation_Number}/File_Name
     mkdir(sprintf('./Sensor_Model/Outputs/Simulation_%s/Image_%s', string(Simulation_Number), string(i)));
     save(sprintf('./Sensor_Model/Outputs/Simulation_%s/Image_%s/se_Image_%s.mat', string(Simulation_Number), string(i), string(i)), "se_Image_Mat");
     save(sprintf('./Sensor_Model/Outputs/Simulation_%s/Image_%s/se_Table_%s.mat', string(Simulation_Number), string(i), string(i)), "se_T_Final");
     save(sprintf('./Sensor_Model/Outputs/Simulation_%s/Image_%s/se_Verification_%s.mat', string(Simulation_Number), string(i), string(i)), "se_T_Verification");
     imwrite(se_Image_Mat/20, sprintf('./Sensor_Model/Outputs/Simulation_%s/Image_%s/Image_%s.png', string(Simulation_Number), string(i), string(i)));
+    % save(sprintf('./Sensor_Model/Outputs/Simulation_%s/Image_%s/se_Boresight_%s.mat', string(Simulation_Number), string(i), string(i)), "se_bo_vect");
+    writetable(se_Image_Mat,sprintf('./Sensor_Model/Outputs/Simulation_%s/Image_%s/se_Image_%s.txt', string(Simulation_Number), string(i), string(i)),'Delimiter',' ');
 end
 
 % Increasing the Simulation Number and saving it for next simulation
